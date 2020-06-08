@@ -1,0 +1,94 @@
+<div class="container-fluid">
+    <div ng-include="url.templateUrl" style="display:inline;"></div>
+    <h1 class="h2-style">Start App Page</h1>
+    <div class="box">
+        <form class="form-horizontal midSection"  name="projectForm">
+          <div class="bs-docs-section">
+            <div class="innerSection">
+              <div ng-show="loader" style="position: relative">
+                    <div class="loading-icon">
+                        <span class="loader"><span class="loader-inner"></span></span>
+                        <label class="loadingText">Loading. Please be patient.</label>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+              </div>
+              <div ng-show="!loader">
+                <div>
+                  <div class="section-icon">
+                      <i class="">
+                          <img class="img-responsive" src="app-content/img/icons/projects-icon-128px.png" />
+                      </i>
+                  </div>
+                  <h4 id="h5">Feature Engineering</h4>
+                  <hr />
+                </div>
+                <div class="tableButtons">
+                      <button type="button" class="btn btn-block btn-primary" ng-click="unreadAnalysis()"><span class="glyphicon glyphicon-plus-sign"></span> Run Classifier on unread</button>
+                </div>
+                <table class="table table-hover table-bordered table-striped animate-if" style="background-color:white;">
+                  <thead>
+                    <tr>
+                      <th colspan="3"> <h2>Feature Engineering</h2> </th>
+                    </tr>
+                    <tr>
+                      <th style="text-align: center"> Name </th>
+                      <th style="text-align: center"> Features </th>
+                      <th style="text-align: center"> Accuracy Result </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th style="text-align: center">
+                        <div class="section-icon">
+                            <i class="">
+                                <img class="img-responsive" src="img/icon.png" />
+
+                            </i>
+                        </div>
+                      </th>
+                      <th style="text-align: center">
+                          <form>
+                            <input type="number" name="input" ng-model="ngram.value" min="0" max="99" required>
+                          </form>
+
+                      </th>
+                      <th style="text-align: center">-</th>
+                    </tr>
+                    <tr>
+                      <th style="text-align: center">
+                        Decision Tree classifier
+                      </th>
+                      <th style="text-align: center">
+
+                      </th>
+                      <th style="text-align: center">
+                        {{dtAccuracy}}
+                      </th>
+                    </tr>
+                    <tr>
+                      <th style="text-align: center">
+                        Naive Bayes classifier
+                      </th>
+                      <th style="text-align: center">
+
+                      </th>
+                      <th style="text-align: center">
+                        {{naiveAccuracy}}
+                      </th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+    </div>
+
+
+
+</div>
