@@ -4,12 +4,14 @@ from os.path import isfile, join, isdir
 from pathlib import Path
 import os
 
+script_dir = os.path.dirname(__file__)
+rawmail = os.path.join(script_dir, '../a_dataAquisition/raw_mail_dir.csv')
 def load_corpus():
     authorset = []
     authcount = 0
     trainset = []
     numemails = []
-    exampleFile = open('./raw_mail_dir.csv', encoding="utf8")
+    exampleFile = open(rawmail, encoding="utf8")
     exampleReader = csv.reader(exampleFile, delimiter="~")
     exampleData = list(exampleReader)
     if len(exampleData) > 0:

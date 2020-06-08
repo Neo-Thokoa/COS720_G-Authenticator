@@ -8,7 +8,8 @@ var users  = [];
 var channels = ["general"];
 var socketsByUsername = {};
 var numUsers = 0;
-let {PythonShell} = require('python-shell')
+let {PythonShell} = require('python-shell');
+let path = require('path');
 
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
@@ -39,23 +40,108 @@ app.get('/dataAcquisition', a_retrieve_gmail);
 function a_retrieve_gmail(req, res) {
       // using spawn instead of exec, prefer a stream over a buffer
       // to avoid maxBuffer issue
-      // var options = {
-      //       args:
-      //       [
-      //         req.query.funds, // starting funds
-      //         req.query.size, // (initial) wager size
-      //         req.query.count, // wager count — number of wagers per sim
-      //         req.query.sims // number of simulations
-      //       ]
-      //     }
-      // PythonShell.run('a_retrieve_gmail.py', options, function (err, data)
-          PythonShell.run('a_retrieve_gmail.py', function (err, data) {
+      var options = {
+            mode: 'text',
+            pythonPath: 'python',
+            pythonOptions: ['-u'],
+            scriptPath: path.join(__dirname,'/a_dataAquisition/'),//Path to your script
+            args:
+            [
+              req.query.funds
+            ]
+          }
+      PythonShell.run('a_retrieve_gmail.py', options, result);
+
+          function result(err, data){
             if (err) res.send(err);
-            console.log('Success %d', data);
-            res.send(data)
-          });
+            var success = {status: 'Success'}
+            res.send(success)
+          }
 }
 
+app.get('/dataCleaning', b_dataCleaning);
+
+function b_dataCleaning(req, res) {
+      // using spawn instead of exec, prefer a stream over a buffer
+      // to avoid maxBuffer issue
+      var options = {
+            mode: 'text',
+            pythonPath: 'python',
+            pythonOptions: ['-u'],
+            scriptPath: path.join(__dirname,'/b_dataClean/'),//Path to your script
+            args:
+            [
+              req.query.funds, // starting funds
+              req.query.size, // (initial) wager size
+              req.query.count, // wager count — number of wagers per sim
+              req.query.sims // number of simulations
+            ]
+          }
+      PythonShell.run('dataclean.py', options, result);
+
+          function result(err, data){
+            if (err) res.send(err);
+            var success = {status: 'success'}
+            res.send(success)
+          }
+}
+
+app.get('/featureEngineer', c_featureEngineer);
+
+function c_featureEngineer(req, res) {
+      // using spawn instead of exec, prefer a stream over a buffer
+      // to avoid maxBuffer issue
+      var options = {
+            mode: 'text',
+            pythonPath: 'python',
+            pythonOptions: ['-u'],
+            scriptPath: path.join(__dirname,'/c_featureEngineer/'),//Path to your script
+            args:
+            [
+              req.query.funds, // starting funds
+              req.query.size, // (initial) wager size
+              req.query.count, // wager count — number of wagers per sim
+              req.query.sims // number of simulations
+            ]
+          }
+      PythonShell.run('featureengineering.py', options, result);
+
+          function result(err, data){
+            if (err) res.send(err);
+            var success = {status: 'success'}
+            res.send(success)
+          }
+}
+
+app.get('/featureAnalysis/', d_featureAnalysis);
+
+function d_featureAnalysis(req, res) {
+      // using spawn instead of exec, prefer a stream over a buffer
+      // to avoid maxBuffer issue
+      console.log("SDP issue")
+      var options = {
+            mode: 'text',
+            pythonPath: 'python',
+            pythonOptions: ['-u'],
+            scriptPath: path.join(__dirname,'/d_featureAnalysis/'),//Path to your script
+            args:
+            [
+              req.query.funds, // starting funds
+              req.query.size, // (initial) wager size
+              req.query.count, // wager count — number of wagers per sim
+              req.query.sims // number of simulations
+            ]
+          
+      }
+      
+      PythonShell.run('featureanalysis.py', options, result);
+
+          function result(err, data){
+            if (err) res.send(err);
+            var success = {status: 'success'}
+            res.send(success)
+          }
+}
 
 // Chatroom
 function deleteUserWithUsername(username) {

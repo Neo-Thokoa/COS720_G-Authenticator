@@ -8,10 +8,17 @@ from bs4 import BeautifulSoup
 import dateutil.parser as parser
 import csv
 import email
+import os.path
+import sys
 
+print(sys.argv[0])
+print(os.path.realpath(__file__))
+script_dir = os.path.dirname(__file__)
+tokenPath = os.path.join(script_dir, 'token.json')
+credentialsPath = os.path.join(script_dir, 'credentials.json')
 # If modifying these scopes, delete the file token.json.
 SCOPES = 'https://www.googleapis.com/auth/gmail.readonly'
-store = file.Storage('token.json')
+store = file.Storage(tokenPath)
 user_id = 'me'
 
 
@@ -19,7 +26,7 @@ def dataaquire():
     label_id_one = 'INBOX'
     creds = store.get()
     if not creds or creds.invalid:
-        flow = client.flow_from_clientsecrets('credentials.json', SCOPES)
+        flow = client.flow_from_clientsecrets(os.path.dirname(credentialsPath), SCOPES)
         creds = tools.run_flow(flow, store)
     GMAIL = build('gmail', 'v1', http=creds.authorize(Http()))
     results = GMAIL.users().messages().list(userId='me', labelIds=[label_id_one]).execute()
@@ -58,11 +65,6 @@ def dataaquire():
 
         temp_dict['Snippet'] = message['snippet']  # fetching message snippet
 
-        # message = GMAIL.users().messages().get(userId=user_id, id=m_id,
-        #                                        format='raw').execute()
-        # msg_str = base64.urlsafe_b64decode(message['raw'].encode('ASCII'))
-        # mime_msg = email.message_from_string(msg_str)
-        # print(mime_msg)
         try:
             message = GMAIL.users().messages().get(userId=user_id, id=m_id,
                                                    format='raw').execute()
@@ -83,7 +85,7 @@ def dataaquire():
         # writer.writeheader()
         for val in final_list:
             writer.writerow(val)
-    return "Success Here"
+    return "Operation Success"
 
 
 def main():
@@ -92,4 +94,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    print("Operation Success")

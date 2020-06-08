@@ -1,12 +1,12 @@
-gAuthenticator.controller("navCtrl", ["$scope", "$location","todoService", function ($scope, $location, todoService){
+gAuthenticator.controller("NavBarController", ["$scope", "$location","$cookies", function ($scope, $location, $cookies){
 
         $scope.cleaner = function () {
             $rootScope = null;
         }
         
-        $scope.viewdataCollection = function () {
+        $scope.signout = function () {
             $rootScope = null;
-            $location.path('/sampleWizardPanal');
+            $location.path('/login');
         };
 
         $scope.viewFindings = function () {
@@ -18,6 +18,9 @@ gAuthenticator.controller("navCtrl", ["$scope", "$location","todoService", funct
             $rootScope = null;
             $location.path('/home');
         }
+
+        $scope.email = $cookies.get('email');
+        console.log($scope.email);
 
 
 }]);
