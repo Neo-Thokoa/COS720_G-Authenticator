@@ -17,9 +17,14 @@ import datetime
 import csv
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
+import os
+
+script_dir = os.path.dirname(__file__)
+authorlist = os.path.join(script_dir, '../c_featureEngineer/authorlist.csv')
+testsetdir = os.path.join(script_dir, '../c_featureEngineer/testset.csv')
 
 def getauthors(AUTHORS):
-    f = open('authorlist.csv', 'r')
+    f = open(authorlist, 'r')
     count = 1
     with f:
 
