@@ -1,72 +1,55 @@
+<link rel="stylesheet" href="app-content/form-3/assets/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="app-content/form-3/assets/css/form-elements.css">
+<link rel="stylesheet" href="app-content/form-3/assets/css/style.css">
 
-<div class=="center">
-        <div class="container">
-            <div class="row" ng-show="!userFound">
-                <div class="col-md-6 col-md-offset-3 well offset4">
-                        <h2>Login</h2>
-                        <div id="g-signin2" style="width: 200px; margin: 20px auto 20px auto;"></div>
-                        <button id="signout" ng-click="signOut()">Signout</button>
-                        <button id="disconnect" ng-click="disconnect()">Disconnect</button>
-                </div>
-            </div>
-            <div class="row"> <h2>Testing </h2></div>
-            <div class="row">
-                    <div ng-include="url.templateUrl" ng-show="userFound" style="display:inline;"></div>
-                    <div style="position: relative">
-                            <div class="loading-icon">
-                                <span class="loader"><span class="loader-inner"></span></span>
-                                <label class="loadingText">Loading. Please be patient.</label>
-                            </div>
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                      </div>
-                    <h1 class="h2-style">Welcome</h1>
-                    <div id="user-details">
-                            <table>
-                              <tr>
-                                <td><img ng-show="user.photo" ng-src="{{ user.photo }}"></td>
-                                <td>&nbsp;</td>
-                              </tr>
-                              <tr ng-show="user.photo">
-                                <td>Photo URL: </td>
-                                <td>{{ user.photo }}</td>
-                              </tr>
-                              <tr ng-show="user.id">
-                                <td>User ID: </td>
-                                <td>{{ user.id }}</td>
-                              </tr>
-                              <tr ng-show="user.fullName">
-                                <td >Full Name: </td>
-                                <td>{{ user.fullName }}</td>
-                              </tr>
-                              <tr ng-show="user.firstName">
-                                <td>First Name: </td>
-                                <td>{{ user.firstName }}</td>
-                              </tr>
-                              <tr ng-show="user.lastName">
-                                <td>Last Name: </td>
-                                <td>{{ user.lastName }}</td>
-                              </tr>
-                              <tr ng-show="user.email">
-                                <td>Email: </td>
-                                <td>{{ user.email }}</td>
-                              </tr>
-                              <tr ng-show="user.domain">
-                                <td>Domain: </td>
-                                <td>{{ user.domain }}</td>
-                              </tr>
-                              <tr ng-show="user.idToken">
-                                <td>ID Token: </td>
-                                <td>{{ user.idToken }}</td>
-                              </tr>
-                              <tr ng-show="user.expiresAt">
-                                <td>Expires At: </td>
-                                <td>{{ user.expiresAt }}</td>
-                              </tr>
-                            </table>      
-                          </div>
-            </div>
+<!-- Top content -->
+<div class="top-content">
+
+  <div class="inner-bg">
+    <div class="container">
+
+        <div class="col-sm-8 col-sm-offset-2 text">
+          <h1>
+            <strong>G-Authenticator</strong> Login</h1>
+          <div class="description">
+            <p>
+              The G-Authenticator System is a system that authenticates emails Use it Now
+              <strong>and get warnings</strong>
+              </a>, if a mismatched email has been detected!
+            </p>
+          </div>
         </div>
+
+
+        <div class="col-sm-6 col-sm-offset-3 form-box">
+          <div class="form-top">
+            <div class="form-top-left">
+              <h3>Login to our site</h3>
+              <p>By Signing into Google</p>
+            </div>
+            <div class="form-top-right">
+              <i class="fa fa-lock"></i>
+            </div>
+          </div>
+          <div class="form-bottom">
+            <div id="g-signin2" style="width: 200px; margin: 20px auto 20px auto;"></div>
+          </div>
+        </div>
+      </div>
+
+        <div class="col-sm-6 col-sm-offset-3 social-login">
+          <h3>...or login with:</h3>
+          <div class="social-login-buttons">
+            <a class="btn btn-link-2" href="#">
+              <i class="fa fa-facebook"></i> Facebook
+            </a>
+            <a class="btn btn-link-2" href="#">
+              <i class="fa fa-twitter"></i> Twitter
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

@@ -12,11 +12,12 @@ Software Development - Java, C++, C#
 Mobile Develoment (Android Java)
 Database - Postgresql, MySql, MongoDb
 
-Web appliaction URL: https://johnojo.github.io/COS730-Assignment/
+Web appliaction URL: 
 
 Interests: Technology, Sporting Fanatic, Entertainment, Data Science
  
-User Manual: https://github.com/JohnOjo/COS730-Assignment/blob/master/Documents/Patientbase%20User%20Manual.pdf
+User Manual: 
+
 
 ## The G-Authenticator
 
@@ -25,7 +26,8 @@ User Manual: https://github.com/JohnOjo/COS730-Assignment/blob/master/Documents/
 ### Deployment Model
 
 ![GitHub Logo](DeploymentDiagram.png)
-Format: ![Alt Text](url)
+
+
 
 * This system uses AngularJS 1.7 for its client side front-end
 * The Backend runs with Node

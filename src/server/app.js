@@ -86,33 +86,6 @@ function b_dataCleaning(req, res) {
           }
 }
 
-app.get('/featureEngineer', c_featureEngineer);
-
-function c_featureEngineer(req, res) {
-      // using spawn instead of exec, prefer a stream over a buffer
-      // to avoid maxBuffer issue
-      var options = {
-            mode: 'text',
-            pythonPath: 'python',
-            pythonOptions: ['-u'],
-            scriptPath: path.join(__dirname,'/c_featureEngineer/'),//Path to your script
-            args:
-            [
-              req.query.funds, // starting funds
-              req.query.size, // (initial) wager size
-              req.query.count, // wager count — number of wagers per sim
-              req.query.sims // number of simulations
-            ]
-          }
-      PythonShell.run('featureengineering.py', options, result);
-
-          function result(err, data){
-            if (err) res.send(err);
-            var success = {status: 'success'}
-            res.send(success)
-          }
-}
-
 app.get('/featureAnalysis/', d_featureAnalysis);
 
 function d_featureAnalysis(req, res) {
@@ -138,12 +111,102 @@ function d_featureAnalysis(req, res) {
 
           function result(err, data){
             if (err) res.send(err);
-            var success = {status: 'success'}
-            res.send(success)
+            var data = {}
+            res.send(data)
           }
 }
 
-// Chatroom
+app.get('/featureEngineer/', c_featureEngineer);
+
+function c_featureEngineer(req, res) {
+      // using spawn instead of exec, prefer a stream over a buffer
+      // to avoid maxBuffer issue
+      console.log("SDP issue")
+      var options = {
+            mode: 'text',
+            pythonPath: 'python',
+            pythonOptions: ['-u'],
+            scriptPath: path.join(__dirname,'/c_featureEngineer/'),
+            args:
+            [
+              req.query.funds, // starting funds
+              req.query.size, // (initial) wager size
+              req.query.count, // wager count — number of wagers per sim
+              req.query.sims // number of simulations
+            ]
+          
+      }
+      
+      PythonShell.run('featureengineering.py', options, result);
+
+          function result(err, data){
+            if (err) res.send(err);
+            var data = {}
+            res.send(data)
+          }
+}
+
+app.get('/unreadAnalysis/', e_unreadAnalysis);
+
+function e_unreadAnalysis(req, res) {
+      // using spawn instead of exec, prefer a stream over a buffer
+      // to avoid maxBuffer issue
+      console.log("SDP issue")
+      var options = {
+            mode: 'text',
+            pythonPath: 'python',
+            pythonOptions: ['-u'],
+            scriptPath: path.join(__dirname,'/e_unreadAnalysis/'),
+            args:
+            [
+              req.query.funds, // starting funds
+              req.query.size, // (initial) wager size
+              req.query.count, // wager count — number of wagers per sim
+              req.query.sims // number of simulations
+            ]
+          
+      }
+      
+      PythonShell.run('anylyzeunread.py', options, result);
+
+          function result(err, data){
+            if (err) res.send(err);
+            var data = {}
+            res.send(data)
+          }
+}
+
+app.get('/sendWarning/', sendWarning);
+
+function sendWarning(req, res) {
+      // using spawn instead of exec, prefer a stream over a buffer
+      // to avoid maxBuffer issue
+      console.log("SDP issue")
+      var options = {
+            mode: 'text',
+            pythonPath: 'python',
+            pythonOptions: ['-u'],
+            scriptPath: path.join(__dirname,'/'),
+            args:
+            [
+              req.query.funds, // starting funds
+              req.query.size, // (initial) wager size
+              req.query.count, // wager count — number of wagers per sim
+              req.query.sims // number of simulations
+            ]
+          
+      }
+      
+      PythonShell.run('sendwarningemail.py', options, result);
+
+          function result(err, data){
+            if (err) res.send(err);
+            var data = {}
+            res.send(data)
+          }
+}
+
+
 function deleteUserWithUsername(username) {
       for(var i = 0; i < users.length; i++) {
             if(users[i].name === username) {

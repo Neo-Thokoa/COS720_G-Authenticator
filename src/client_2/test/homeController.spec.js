@@ -20,17 +20,17 @@ describe('HomeController', function() {
              expect($controller).toBeDefined();
       });
 
-      // it('should set user and change location to chat route', function() {
-      //       loginController.username = 'my_user';
-      //       spyOn(Users, 'setUser');
-      //       loginController.login( 'my_user');
+      it('should set user and change location to chat route', function() {
+            loginController.username = 'my_user';
+            spyOn(Users, 'setUser');
+            loginController.login( 'my_user');
 
-      //       // Check that it sets a new user
-      //       expect(Users.setUser).toHaveBeenCalledWith('my_user');
-      //       // Check location route
-      //       expect($location.path()).toBe('/chat');
+            // Check that it sets a new user
+            expect(Users.setUser).toHaveBeenCalledWith('my_user');
+            // Check location route
+            expect($location.path()).toBe('/chat');
 
-      // });
+      });
 
 
 });

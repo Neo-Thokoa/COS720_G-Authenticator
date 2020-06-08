@@ -249,4 +249,4 @@ def analyzeunreadmail(classifiername):
     return classifierunreademail(classifiername)
 
 
-# textblobclassifiers()
+textblobclassifiers()

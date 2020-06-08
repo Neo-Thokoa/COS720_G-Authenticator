@@ -88,9 +88,8 @@ gAuthenticator.controller("MainController", ['$http',"$scope", "$location", '$co
           })
           .then(function(resp){
             $scope.loader = false;
-            console.log("Exiting Feature Engineer with response as follows");
             console.log(resp.data);
-              $scope.dataAnalysis();
+            $scope.dataAnalysis();
           },function(error){
             console.log("Something failed Feature Engineering");
               console.log(error);
@@ -104,7 +103,7 @@ gAuthenticator.controller("MainController", ['$http',"$scope", "$location", '$co
           $scope.loader = true;
           $http({
             method:'GET',
-            url:'/dataAnalysis/'
+            url:'/featureAnalysis/'
           })
           .then(function(resp){
             $scope.loader = false;
