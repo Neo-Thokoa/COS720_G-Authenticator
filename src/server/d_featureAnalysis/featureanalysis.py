@@ -17,9 +17,14 @@ import datetime
 import csv
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
+import os
 
+script_dir = os.path.dirname(__file__)
+authorlist = os.path.join(script_dir, '../c_featureEngineer/authorlist.csv')
+testsetdir = os.path.join(script_dir, '../c_featureEngineer/testset.csv')
+textblobtrain  = os.path.join(script_dir, '../c_featureEngineer/textblobtrain.csv')
 def getauthors(AUTHORS):
-    f = open('authorlist.csv', 'r')
+    f = open(authorlist, 'r')
     count = 1
     with f:
 
@@ -34,8 +39,7 @@ def getauthors(AUTHORS):
 
 
 def textblobclassifiers():
-    print("We are in TextBlob")
-    testfile = open('testset.csv')
+    testfile = open(testsetdir)
     testset = csv.reader(testfile, delimiter="~")
     try:
         testdata = list(testset)
@@ -47,9 +51,8 @@ def textblobclassifiers():
             del testdata[itertest]
         itertest = itertest + 1
     a_test_set = [tuple(y) for y in testdata]
-    print(a_test_set)
     testfile.close()
-    trainfile = open('textblobtrain.csv')
+    trainfile = open(textblobtrain)
     dataset = csv.reader(trainfile, delimiter="~")
     data = list(dataset)
     counter = 0
@@ -246,8 +249,4 @@ def analyzeunreadmail(classifiername):
     return classifierunreademail(classifiername)
 
 
-def testprint():
-    return "Print Success"
-
-
-print("Activated")
+# textblobclassifiers()

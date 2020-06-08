@@ -7,8 +7,10 @@ import nltk
 from textstat.textstat import textstat
 from textblob import TextBlob
 import json
+import os
 
-
+script_dir = os.path.realpath('..')
+dataPath = os.path.join(script_dir, 'b_dataClean/b_DataCleaning')
 def load_corpus(input_dir):
     trainfiles = [f for f in listdir(input_dir) if isdir(join(input_dir, f))]
     trainset = []
@@ -64,7 +66,7 @@ def averageCharNumber(data):
     featureSet = []
     for author in data:
         n = author['numemails']
-        print("Author: ", author['author'], "NumberEmails ", n)
+        # print("Author: ", author['author'], "NumberEmails ", n)
         c = 0
         for item in author['mailset']:
             c += len(item['text'])
@@ -263,7 +265,7 @@ def writeIntoCSV(data):
         f.writerow([item['author'], str(values)])
         # for featureitem in item['featureSet']:
         #     f.writerow([item['author'], featureitem])
-    print("Done")
+    # print("Done")
 
 
 def writeAuthorsCSV(data):
@@ -272,7 +274,7 @@ def writeAuthorsCSV(data):
         f.writerow([item['author']])
         # for featureitem in item['featureSet']:
         #     f.writerow([item['author'], featureitem])
-    print("Done")
+    # print("Done")
 
 
 def writetrainset(data):
@@ -287,56 +289,56 @@ def writetrainset(data):
     for item in data:
         for mail in item['mailset']:
             textblobwriter.writerow([mail['text'], item['author']])
-    print("Done")
+    # print("Done")
 
 
 def dataextraction():
-    data = load_dir('b_DataCleaning')
-    print('#################1###############')
-    print('Featureset averageCharNumber')
-    print('#################1###############')
+    data = load_dir(dataPath)
+    # print('#################1###############')
+    # print('Featureset averageCharNumber')
+    # print('#################1###############')
     writeAuthorsCSV(data)
     writetrainset(data)
     datasetForML = averageCharNumber(data)
 
-    print('#################2###############')
-    print('Featureset averageWordNumber')
-    print('#################2###############')
+    # print('#################2###############')
+    # print('Featureset averageWordNumber')
+    # print('#################2###############')
     datasetForML = averageWordNumber(datasetForML, data)
 
-    print('#################3###############')
-    print('Featureset averageWordLength')
-    print('#################3###############')
+    # print('#################3###############')
+    # print('Featureset averageWordLength')
+    # print('#################3###############')
     datasetForML = averageWordLength(datasetForML, data)
 
-    print('#################4################')
-    print('Featureset averageSentenceNumber')
-    print('#################4###############')
+    # print('#################4################')
+    # print('Featureset averageSentenceNumber')
+    # print('#################4###############')
     datasetForML = averageSentenceNumber(datasetForML, data)
 
-    print('#################5################')
-    print('Featureset averageParagraphNumber')
-    print('#################5################')
+    # print('#################5################')
+    # print('Featureset averageParagraphNumber')
+    # print('#################5################')
     datasetForML = averageParagraphNumber(datasetForML, data)
 
-    print('#################6################')
-    print('Featureset shortWordRatioDensity')
-    print('#################6################')
+    # print('#################6################')
+    # print('Featureset shortWordRatioDensity')
+    # print('#################6################')
     datasetForML = shortWordRatioDensity(datasetForML, data)
 
-    print('#################7################')
-    print('Featureset authourSentimentPolarity')
-    print('#################7################')
+    # print('#################7################')
+    # print('Featureset authourSentimentPolarity')
+    # print('#################7################')
     datasetForML = authourSentimentPolarity(datasetForML, data)
 
-    print('#################8################')
-    print('Featureset averagenounphrase')
-    print('#################8################')
+    # print('#################8################')
+    # print('Featureset averagenounphrase')
+    # print('#################8################')
     datasetForML = averagenounphrase(datasetForML, data)
 
-    print('#################9################')
-    print('Featureset numericRatioDensity')
-    print('#################9################')
+    # print('#################9################')
+    # print('Featureset numericRatioDensity')
+    # print('#################9################')
     datasetForML = numericRatioDensity(datasetForML, data)
 
     writeIntoCSV(datasetForML)

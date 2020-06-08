@@ -1,4 +1,4 @@
-gAuthenticator.controller("MainController", ['$http',"$scope", "$location", function ($http, $scope, $location) {
+gAuthenticator.controller("MainController", ['$http',"$scope", "$location", '$cookies', function ($http, $scope, $location, $cookies) {
 
   $scope.loader = false;
   $scope.result = "-";
@@ -21,6 +21,17 @@ gAuthenticator.controller("MainController", ['$http',"$scope", "$location", func
         window.location = url;
       };
 
+      $scope.email = $cookies.get('email');
+      console.log($scope.email);
+      $scope.id = $cookies.get('id');
+      $scope.name = $cookies.get('name');
+      $scope.photo = $cookies.get('photo');
+      $scope.domain = $cookies.get('domain');
+      $scope.idToken = $cookies.get('idToken');
+      $scope.expiresAt = $cookies.get('expiresAt');
+      $scope.sessionGuid = $cookies.get('sessionGuid');
+
+
         $scope.url = {
 
         templateUrl: "pages/navBar/navBar.view.html",
@@ -30,16 +41,12 @@ gAuthenticator.controller("MainController", ['$http',"$scope", "$location", func
 
         $scope.initializeApp = function()
         {
+          var data = {'id': $scope.id}
           $scope.loader = true;
-          $http({
-            method:'GET',
-            url:'/dataAcquisition/',
-            headers: {
-               'Content-Type': 'application/json;charset=utf-8'
-            }
-          })
-          .then(function(resp){
+          $http.get('/dataAcquisition', JSON.stringify(data))
+          .then(function successCallback(resp){
             $scope.loader = false;
+            console.log("Successful callback")
               console.log(resp.data);
               if(resp.data.status == "Success")
               {
@@ -47,6 +54,7 @@ gAuthenticator.controller("MainController", ['$http',"$scope", "$location", func
                 $scope.dataClean();
               }
           },function(error){
+              console.log("Error occured")
               console.log(error);
           });
         };
@@ -57,16 +65,13 @@ gAuthenticator.controller("MainController", ['$http',"$scope", "$location", func
           $scope.loader = true;
           $http({
             method:'GET',
-            url:'http://127.0.0.1:5000/dataCleaning/',
-            headers: {
-               'Content-Type': 'application/json;charset=utf-8',
-                'crossDomain': true
-            }
+            url:'/dataCleaning/'
           })
           .then(function(resp){
             $scope.loader = false;
               console.log(resp.data);
               $scope.dataExtract();
+              // $scope.dataAnalysis();
 
           },function(error){
               console.log(error);
@@ -79,19 +84,39 @@ gAuthenticator.controller("MainController", ['$http',"$scope", "$location", func
           $scope.loader = true;
           $http({
             method:'GET',
-            url:'http://127.0.0.1:5000/featureEngineer/',
-            headers: {
-               'Content-Type': 'application/json;charset=utf-8',
-                'crossDomain': true
-            }
+            url:'/featureEngineer/'
           })
           .then(function(resp){
             $scope.loader = false;
             console.log("Exiting Feature Engineer with response as follows");
-              console.log(resp.data);
+            console.log(resp.data);
               $scope.dataAnalysis();
           },function(error){
             console.log("Something failed Feature Engineering");
+              console.log(error);
+          });
+        };
+
+
+        $scope.dataAnalysis = function()
+        {
+          console.log("Inside Data Analysis")
+          $scope.loader = true;
+          $http({
+            method:'GET',
+            url:'/dataAnalysis/'
+          })
+          .then(function(resp){
+            $scope.loader = false;
+            console.log(resp);
+              $scope.naiveAccuracy = resp.data.naiveaccuracy;
+              $scope.dtAccuracy = resp.data.dtaccuracy;
+              $scope.classifierUsed = resp.data.mostAccurate;
+
+              $scope.result = resp;
+              console.log($scope.result);
+          },function(error){
+            console.log("Something failed Data Analysis");
               console.log(error);
           });
         };
@@ -102,10 +127,7 @@ gAuthenticator.controller("MainController", ['$http',"$scope", "$location", func
           $scope.loader = true;
           $http({
             method:'GET',
-            url:'http://127.0.0.1:5000/unreadAnalysis/',
-            headers: {
-               'Content-Type': 'application/json;charset=utf-8'
-            }
+            url:'/unreadAnalysis/',
           })
           .then(function(resp){
             $scope.loader = false;
@@ -115,34 +137,9 @@ gAuthenticator.controller("MainController", ['$http',"$scope", "$location", func
           },function(error){
               console.log(error);
           });
-          // $http.get("http://127.0.0.1:5000/dataAcquisition/").then(function(response){
-          //   console.log(response.data); });
+
         }
 
-        $scope.dataAnalysis = function()
-        {
-          console.log("Inside Data Analysis")
-          $scope.loader = true;
-          $http({
-            method:'GET',
-            url:'http://127.0.0.1:5000/featureAnalysis/',
-            headers: {
-               'Content-Type': 'application/json;charset=utf-8',
-                'crossDomain': true
-            }
-          })
-          .then(function(resp){
-            $scope.loader = false;
-              $scope.result = resp.data;
-              console.log($scope.result);
-              $scope.naiveAccuracy = resp.data.naiveaccuracy;
-              $scope.dtAccuracy = resp.data.dtaccuracy;
-              $scope.classifierUsed = resp.data.mostAccurate;
-          },function(error){
-            console.log("Something failed Feature Analysis");
-              console.log(error);
-          });
-        };
 
         $scope.activate = function()
         {
@@ -170,12 +167,8 @@ gAuthenticator.controller("MainController", ['$http',"$scope", "$location", func
           // $scope.loader = true;
           $http({
             method:'GET',
-            url:'http://127.0.0.1:5000/sendmail',
+            url:'/sendmail',
             crossDomain: true,
-            headers:{
-                    'Access-Control-Allow-Origin': '*',
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
             data:{'message': $scope.message}
           })
           .then(function(resp){
