@@ -1,6 +1,4 @@
 // Karma configuration
-// Generated on Sat Feb 04 2017 18:43:46 GMT+1100 (AEDT)
-
 module.exports = function(config) {
   config.set({
 
@@ -9,38 +7,40 @@ module.exports = function(config) {
 
 
     // frameworks to use
-    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+    
     frameworks: ['jasmine'],
-
+// available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     // list of files / patterns to load in the browser
     files: [
           './node_modules/angular/angular.js',
-          './src/client/lib/angular-route.js',
-          './src/client/lib/ngGravatar.js',
-          './src/client/lib/socket.io.js',
-          './src/client/lib/angular-socket/socket.js',
+          './src/client_2/lib/cookies.min.js',
+          './src/client_2/lib/angular-route.js',
+          './src/client_2/lib/ngGravatar.js',
+          './src/client_2/lib/socket.io.js',
+          './src/client_2/lib/angular-socket/socket.js',
           './node_modules/angular-ui-router/release/angular-ui-router.js', // ui-router
           './node_modules/angular-mocks/angular-mocks.js',                 // loads our modules for tests
-          './src/client/app/app.js',
-          './src/client/app/services/socket.js',
+          './src/client_2/app.js',
           // models
-          './src/client/app/models/user-compiled.js',
-          './src/client/app/models/message-compiled.js',
-          './src/client/app/models/channel-compiled.js',
-          './src/client/app/models/DMChannel-compiled.js',
-          // services
-          './src/client/app/services/socketEvents.js',
-          './src/client/app/services/notifications-compiled.js',
-          './src/client/app/services/events-compiled.js',
-          './src/client/app/services/users-compiled.js',
-          './src/client/app/login/loginController-compiled.js',
-          './src/client/app/directives/messageForm/MessageFormController-compiled.js',
+          // './src/client/app/models/user-compiled.js',
+          // './src/client/app/models/message-compiled.js',
+          // './src/client/app/models/channel-compiled.js',
+          // './src/client/app/models/DMChannel-compiled.js',
+          // // services
+          './src/client_2/services/socket.js',
+          // './src/client/app/services/socketEvents.js',
+          // './src/client/app/services/notifications-compiled.js',
+          // './src/client/app/services/events-compiled.js',
+          // './src/client/app/services/users-compiled.js',
+          './src/client_2/pages/login/login.controller.js',
+          './src/client_2/pages/home/home.controller.js',
+          // './src/client/app/directives/messageForm/MessageFormController-compiled.js',
 
-           './src/client/app/services/channels-compiled.js',
-           './src/client/app/filters/*.js',
+          //  './src/client/app/services/channels-compiled.js',
+          //  './src/client/app/filters/*.js',
 
           // Unit tests
-          './src/client/test/*.spec.js'
+          './src/client_2/test/*.spec.js'
     ],
 
     // list of files to exclude

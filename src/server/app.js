@@ -8,14 +8,14 @@ var users  = [];
 var channels = ["general"];
 var socketsByUsername = {};
 var numUsers = 0;
-var PythonShell = require('python-shell');
+let {PythonShell} = require('python-shell')
 
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
 
 // Routing
-app.use(express.static('./src/client/'));
+app.use(express.static('./src/client_2/'));
 
 // Get all the current users in json
 app.get('/users', function(req, res){
@@ -39,19 +39,20 @@ app.get('/dataAcquisition', a_retrieve_gmail);
 function a_retrieve_gmail(req, res) {
       // using spawn instead of exec, prefer a stream over a buffer
       // to avoid maxBuffer issue
-      var options = {
-            args:
-            [
-              req.query.funds, // starting funds
-              req.query.size, // (initial) wager size
-              req.query.count, // wager count — number of wagers per sim
-              req.query.sims // number of simulations
-            ]
-          }
-          PythonShell.run('./a_retrieve_gmail.py', options, function (err, data) {
+      // var options = {
+      //       args:
+      //       [
+      //         req.query.funds, // starting funds
+      //         req.query.size, // (initial) wager size
+      //         req.query.count, // wager count — number of wagers per sim
+      //         req.query.sims // number of simulations
+      //       ]
+      //     }
+      // PythonShell.run('a_retrieve_gmail.py', options, function (err, data)
+          PythonShell.run('a_retrieve_gmail.py', function (err, data) {
             if (err) res.send(err);
-            console.log('Success %d', data.toString());
-            res.send(data.toString())
+            console.log('Success %d', data);
+            res.send(data)
           });
 }
 

@@ -4,25 +4,30 @@ module.exports = function(grunt) {
 
       grunt.initConfig({
             pkg: grunt.file.readJSON('package.json'),
-          babel: {
-              options: {
-                  sourceMap: true,
-                  presets: ['es2015']
-              },
-              files: {
-                    expand: true,
-                    src: ['**/*.es6'],
-                    ext: '-compiled.js'
-              }
-        },
-        karma: {
-             unit: {
-                   configFile: 'karma.conf.js',
-                   singleRun: true
-             }
-      }
+
+            karma: {
+                  options: {
+                        configFile: 'karma.conf.js'
+                  },
+                  unit: {
+                        singleRun: true
+                  },
+                  continuous: {
+                        // keep karma running in the background
+                        background: true
+                  }
+            },
+            watch: {
+                  karma: {
+                    // run these tasks when these files change
+                    files: ['./src/client_2/**/*.js', './src/client_2/test/*.spec.js'],
+                    tasks: ['karma:continuous:run'] // note the :run flag
+                  }
+            }
       });
 
-      grunt.registerTask('default', ['babel', 'karma']);
+      grunt.loadNpmTasks('grunt-karma');
+      grunt.loadNpmTasks('grunt-contrib-watch');
+      grunt.registerTask('default', ['karma:continuous:start', 'watch:karma']);
 
 }
