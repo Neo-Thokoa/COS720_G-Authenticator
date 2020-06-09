@@ -16,7 +16,7 @@ Web appliaction URL:
 
 Interests: Technology, Sporting Fanatic, Entertainment, Data Science
  
-User Manual: 
+User Manual: https://github.com/Neo-Thokoa/COS720_G-Authenticator/blob/master/Usermanual-V1.pdf
 
 
 ## The G-Authenticator
