@@ -79,4 +79,4 @@ def load_corpus():
     return trainset
 
 
-# load_corpus()
+load_corpus()

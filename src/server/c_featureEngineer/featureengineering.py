@@ -9,8 +9,10 @@ from textblob import TextBlob
 import json
 import os
 
-script_dir = os.path.realpath('..')
-dataPath = os.path.join(script_dir, 'b_dataClean/b_DataCleaning')
+# script_dir = os.path.realpath('..')
+# script_dir = os.getcwd()
+script_dir = os.path.dirname(__file__)
+dataPath = os.path.join(script_dir, '../b_dataClean/b_DataCleaning')
 def load_corpus(input_dir):
     trainfiles = [f for f in listdir(input_dir) if isdir(join(input_dir, f))]
     trainset = []
