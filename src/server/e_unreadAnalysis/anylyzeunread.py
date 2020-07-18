@@ -22,6 +22,8 @@ import os
 script_dir = os.path.dirname(__file__)
 authorlist = os.path.join(script_dir, '../c_featureEngineer/authorlist.csv')
 testsetdir = os.path.join(script_dir, '../c_featureEngineer/testset.csv')
+textblobtraindir = os.path.join(script_dir, '../c_featureEngineer/textblobtrain.csv')
+tokenPath = os.path.join(script_dir, '../a_dataAquisition/token.json')
 
 def getauthors(AUTHORS):
     f = open(authorlist, 'r')
@@ -48,9 +50,10 @@ def textblobClassifiers():
             del testdata[itertest]
         itertest = itertest + 1
     a_test_set = [tuple(y) for y in testdata]
-    print(a_test_set)
+    # print(a_test_set)
     testfile.close()
-    trainfile = open('textblobtrain.csv')
+    # trainfile = open('../c_featureEngineer/textblobtrain.csv')
+    trainfile = open(textblobtraindir)
     dataset = csv.reader(trainfile, delimiter="~")
     data = list(dataset)
     counter = 0
@@ -94,8 +97,8 @@ def classifierunreademail(classifiername):
             if count == 1:
 
                 authorOne = data[0].strip()
-                print(authorOne)
-                print('-------')
+                # print(authorOne)
+                # print('-------')
                 if '<' in authorOne:
                     authorOne = data[0].partition('<')[0].strip()
                 if '-' in authorOne:
@@ -107,8 +110,8 @@ def classifierunreademail(classifiername):
                 continue
             if count == 2:
                 authorTwo = data[0].strip()
-                print(authorTwo)
-                print('#####')
+                # print(authorTwo)
+                # print('#####')
                 if '<' in authorTwo:
                     authorTwo = data[0].partition('<')[0].strip()
                 if '-' in authorTwo:
@@ -117,7 +120,8 @@ def classifierunreademail(classifiername):
                     authorTwo = authorTwo.replace('"', '')
                 authTwoText = data[3]
                 count = count + 1
-        trainfile = open('textblobtrain.csv')
+        # trainfile = open('../c_featureEngineer/textblobtrain.csv')
+        trainfile = open(textblobtraindir)
         dataset = csv.reader(trainfile, delimiter="~")
         data = list(dataset)
         counter = 0
@@ -141,11 +145,11 @@ def classifierunreademail(classifiername):
             anotherblob = TextBlob(authTwoText, classifier=dt_classifier)
             detectedauthora = blob.classify()
             detectedauthorb = anotherblob.classify()
-        print("Detected for A: ", detectedauthora)
-        print("Detected for B: ", detectedauthorb)
+        # print("Detected for A: ", detectedauthora)
+        # print("Detected for B: ", detectedauthorb)
         authorastatus = 'DNE'
         authorbstatus = 'DNE'
-        f = open('authorlist.csv', 'r')
+        f = open(authorlist, 'r')
         AUTHORS = {}
         AUTHORS = getauthors(AUTHORS)
         for currentauthor in AUTHORS:
@@ -163,7 +167,8 @@ def classifierunreademail(classifiername):
 
 def analyzeunreadmail(classifiername):
     SCOPES = 'https://www.googleapis.com/auth/gmail.modify'
-    store = file.Storage('token.json')
+    # store = file.Storage('../a_dataAquisition/token.json')
+    store = file.Storage(tokenPath)
     creds = store.get()
     if not creds or creds.invalid:
         flow = client.flow_from_clientsecrets('credentials.json', SCOPES)
@@ -174,7 +179,7 @@ def analyzeunreadmail(classifiername):
     label_id_two = 'UNREAD'
     unread_msgs = GMAIL.users().messages().list(userId='me', labelIds=[label_id_two], maxResults=2).execute()
     mssg_list = unread_msgs['messages']
-    print("Total unread messages in inbox: ", str(len(mssg_list)))
+    # print("Total unread messages in inbox: ", str(len(mssg_list)))
 
     final_list = []
     for mssg in mssg_list:
@@ -234,7 +239,7 @@ def analyzeunreadmail(classifiername):
         # This will mark the messagea as read
         GMAIL.users().messages().modify(userId=user_id, id=m_id, body={'removeLabelIds': ['UNREAD']}).execute()
 
-    print("Total messaged retrived: ", str(len(final_list)))
+    # print("Total messaged retrived: ", str(len(final_list)))
     # exporting the values as .csv
     with open('unreadtest.csv', 'w', encoding='utf-8', newline='') as csvfile:
         fieldnames = ['Sender', 'Subject', 'Date', 'Snippet', 'Message_body']

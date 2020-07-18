@@ -16,7 +16,9 @@ server.listen(port, function () {
 });
 
 // Routing
-app.use(express.static('./src/client_2/'));
+// app.use(express.static('./src/client_2/'));
+// app.use(express.static('./src/test_client/'));
+app.use(express.static('./src/client_3/'));
 
 // Get all the current users in json
 app.get('/users', function(req, res){
@@ -53,6 +55,7 @@ function a_retrieve_gmail(req, res) {
       PythonShell.run('a_retrieve_gmail.py', options, result);
 
           function result(err, data){
+            res.header("Access-Control-Allow-Origin", "*");
             if (err) res.send(err);
             var success = {status: 'Success'}
             res.send(success)
@@ -80,6 +83,7 @@ function b_dataCleaning(req, res) {
       PythonShell.run('dataclean.py', options, result);
 
           function result(err, data){
+            res.header("Access-Control-Allow-Origin", "*");
             if (err) res.send(err);
             var success = {status: 'success'}
             res.send(success)
@@ -89,9 +93,6 @@ function b_dataCleaning(req, res) {
 app.get('/featureAnalysis/', d_featureAnalysis);
 
 function d_featureAnalysis(req, res) {
-      // using spawn instead of exec, prefer a stream over a buffer
-      // to avoid maxBuffer issue
-      console.log("SDP issue")
       var options = {
             mode: 'text',
             pythonPath: 'python',
@@ -110,6 +111,7 @@ function d_featureAnalysis(req, res) {
       PythonShell.run('featureanalysis.py', options, result);
 
           function result(err, data){
+            res.header("Access-Control-Allow-Origin", "*");
             if (err) res.send(err);
             var data = {}
             res.send(data)
@@ -119,9 +121,7 @@ function d_featureAnalysis(req, res) {
 app.get('/featureEngineer/', c_featureEngineer);
 
 function c_featureEngineer(req, res) {
-      // using spawn instead of exec, prefer a stream over a buffer
-      // to avoid maxBuffer issue
-      console.log("SDP issue")
+
       var options = {
             mode: 'text',
             pythonPath: 'python',
@@ -140,6 +140,7 @@ function c_featureEngineer(req, res) {
       PythonShell.run('featureengineering.py', options, result);
 
           function result(err, data){
+            res.header("Access-Control-Allow-Origin", "*");
             if (err) res.send(err);
             var data = {}
             res.send(data)
@@ -149,9 +150,7 @@ function c_featureEngineer(req, res) {
 app.get('/unreadAnalysis/', e_unreadAnalysis);
 
 function e_unreadAnalysis(req, res) {
-      // using spawn instead of exec, prefer a stream over a buffer
-      // to avoid maxBuffer issue
-      console.log("SDP issue")
+
       var options = {
             mode: 'text',
             pythonPath: 'python',
@@ -159,10 +158,7 @@ function e_unreadAnalysis(req, res) {
             scriptPath: path.join(__dirname,'/e_unreadAnalysis/'),
             args:
             [
-              req.query.funds, // starting funds
-              req.query.size, // (initial) wager size
-              req.query.count, // wager count — number of wagers per sim
-              req.query.sims // number of simulations
+              req.query.funds
             ]
           
       }
@@ -170,8 +166,13 @@ function e_unreadAnalysis(req, res) {
       PythonShell.run('anylyzeunread.py', options, result);
 
           function result(err, data){
-            if (err) res.send(err);
-            var data = {}
+            res.header("Access-Control-Allow-Origin", "*");
+            if (err)
+            {
+                  console.log(err);
+                  return;
+                  // res.send(err);
+            } 
             res.send(data)
           }
 }
@@ -179,9 +180,6 @@ function e_unreadAnalysis(req, res) {
 app.get('/sendWarning/', sendWarning);
 
 function sendWarning(req, res) {
-      // using spawn instead of exec, prefer a stream over a buffer
-      // to avoid maxBuffer issue
-      console.log("SDP issue")
       var options = {
             mode: 'text',
             pythonPath: 'python',
@@ -189,10 +187,7 @@ function sendWarning(req, res) {
             scriptPath: path.join(__dirname,'/'),
             args:
             [
-              req.query.funds, // starting funds
-              req.query.size, // (initial) wager size
-              req.query.count, // wager count — number of wagers per sim
-              req.query.sims // number of simulations
+              req.message
             ]
           
       }
@@ -200,8 +195,13 @@ function sendWarning(req, res) {
       PythonShell.run('sendwarningemail.py', options, result);
 
           function result(err, data){
-            if (err) res.send(err);
-            var data = {}
+            res.header("Access-Control-Allow-Origin", "*");
+            if (err)
+            {
+                  console.log(err);
+                  return;
+                  // res.send(err);
+            } 
             res.send(data)
           }
 }

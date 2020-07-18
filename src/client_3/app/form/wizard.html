@@ -1,0 +1,143 @@
+<div class="page">
+
+    <div class="row ui-section">
+        <div class="col-lg-8 clearfix">
+            <h2 class="section-header">G-Authenticator Analysis</h2>
+        </div>
+        <div class="col-md-12">
+            <section class="panel panel-default" ng-controller="WizardCtrl">
+                <div class="panel-body padding-xl">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <section >
+                                <!-- <md-button ng-click="stepToggle()" class="md-raised btn-w-md md-accent">Toggle Steps</md-button> -->
+                                <!-- <span>Click to toggle steps on and off dynamically</span> -->
+                                <!-- <wizard on-finish="finished()" indicators-position="top">
+                                    <wz-step wz-title="Email Aquisition" canexit="exitWithAPromise">
+                                        <h2>Email Aquisition</h2>
+                                        <div class="ui-wizard-content">
+                                            <p>Hey <strong>{{profileName}}</strong> , welcome to the G-Authenticator App :)</p>
+                                            <p>We are currently acquiring your email for Data Analyss. <strong>Hang Ten</strong> And watch as we progress!</p>
+                                            <p>On Timeline bar on top</p>
+                                        </div>
+                                        <div class="ui-wizard-actions">
+                                            
+                                            <md-button type="submit" wz-next class="md-raised btn-w-md md-primary">Next</md-button>
+                                        </div>
+                                    </wz-step>
+                                    <wz-step wz-title="Data Cleaning" canexit="exitValidation">
+                                        <h2>Data Cleaning</h2>
+                                        <div class="ui-wizard-content">
+                                            <p>You're now in the second step of this wizard.</p>
+                                            <p><strong>This step is an example of using <em>canexit</em> validation with no server call, </strong></p>
+                                            <p>Toggle the value to true or false using the button below to see an example of being allowed to exit and being restricted.</p>
+                                            <md-button ng-click="exitToggle()" class="md-raised btn-w-md md-accent">Toggle Validation!</md-button>
+                                            <div class="callout callout-info">
+                                                <p>Value is currently: {{canExit}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="ui-wizard-actions">
+                                            <md-button wz-previous="logStep()"  class="md-raised btn-w-md">BACK</md-button>
+                                            <md-button wz-next="logStep()" class="md-raised btn-w-md md-primary" ng-disabled="!canExit">NEXT</md-button>
+                                        </div>
+                                    </wz-step>
+                                    <wz-step wz-title="Feature Engineering" wz-disabled="{{!stepActive}}">
+                                        <h2>Feature Engineering</h2>
+                                        <div class="ui-wizard-content">
+                                            <p>Click on the top navigation on Liking it to go back to that step for example</p>
+                                        </div>
+                                        <div class="ui-wizard-actions">
+                                            <md-button wz-previous="logStep()"  class="md-raised btn-w-md">BACK</md-button>
+                                            <md-button wz-next="logStep()" class="md-raised btn-w-md md-primary" ng-disabled="!canExit">NEXT</md-button>
+                                        </div>
+                                    </wz-step>
+                                    <wz-step wz-title="Feature Analysis">
+                                        <h2>Feature Analysis</h2>
+                                        <div class="ui-wizard-content">
+                                            <p>I can't deal with so many steps. ARGH</p>
+                                        </div>
+                                        <div class="ui-wizard-actions">
+                                            <md-button wz-previous="logStep()"  class="md-raised btn-w-md">BACK</md-button>
+                                            <md-button wz-next="logStep()" class="md-raised btn-w-md md-primary">NEXT</md-button>
+                                        </div>
+                                    </wz-step>
+                                    <wz-step wz-title="Analysis Complete">
+                                        <h2>Analysis Complete</h2>
+                                        <div class="ui-wizard-content">
+                                            <p>Finally this ends!</p>
+                                        </div>
+                                        <div class="ui-wizard-actions">
+                                            <md-button ng-click="goBack()" class="md-raised btn-w-md md-accent">Restart</md-button>
+                                            <md-button wz-reset class="md-raised btn-w-md md-accent">Reset</md-button>
+                                            <md-button wz-previous="logStep()"  class="md-raised btn-w-md">BACK</md-button>
+                                            <md-button wz-next="logStep()" class="md-raised btn-w-md md-primary">Finish</md-button>
+                                        </div>
+                                    </wz-step>
+                                </wizard> -->
+                                <div class="row ui-section">
+                                    <div class="col-lg-8 clearfix">
+                                        <h2 class="section-header">Email Analysis</h2>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <section class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div class="callout callout-danger">
+                                                    <h4>Hey <strong>{{profileName}}</strong></h4>
+                                                    <p>welcome to the <strong> G-Authenticator App</strong> :)</p>
+                                                    <p>We are currently acquiring your email for Data Analyss. <strong>Hang Ten</strong> And watch as we progress!</p>
+                                                    <p>On Timelines at the bottom for progress</p>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div> 
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <section class="panel panel-default">
+                                            <div class="panel-body" ng-controller="ProgressLinearDemo as vm" ng-cloak>
+                                                <h4>Email Aquisition</h4>
+                                                <div class="divider"></div>
+                                                <md-progress-linear md-mode="indeterminate" ng-show="stageOne"></md-progress-linear>
+                                                <div class="divider divider-lg divider-dashed"></div>
+                                                <h4>Data Cleaning</h4>
+                                                <div class="divider"></div>
+                                                <md-progress-linear md-mode="indeterminate" ng-show="stageTwo"></md-progress-linear>
+                                                <div class="divider divider-lg divider-dashed"></div>
+                                                <h4>Feature Engineering</h4>
+                                                <div class="divider"></div>
+                                                <md-progress-linear md-mode="indeterminate" ng-show="stageThree"></md-progress-linear>
+                                                <div class="divider divider-lg divider-dashed"></div>
+                                                <h4>Feature Analysis</h4>
+                                                <div class="divider"></div>
+                                                <md-progress-linear md-mode="indeterminate" ng-show="stageFour"></md-progress-linear>
+                            
+                                            </div>
+                                        </section>            
+                                    </div>      
+                                </div>
+
+                                <div class="divider divider-lg"></div>
+                                <div ng-show="stageFour">
+                                    <h4>Toast Position: "{{getToastPosition()}}"</h4>
+                                    <div class="divider"></div>
+                                    <md-checkbox ng-repeat="(name, isSelected) in toastPosition" ng-model="toastPosition[name]"> {{name}} </md-checkbox>
+                                    <script type="text/ng-template" id="toast-template.html">
+                                        <md-toast class="md-toast-primary">
+                                            <span flex>This is a custom toast!</span>
+                                            <md-button ng-click="closeToast()">
+                                                Close
+                                            </md-button>
+                                        </md-toast>
+                                    </script>
+                                </div>
+                                
+                                
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </section>     
+        </div>
+    </div>
+
+</div>

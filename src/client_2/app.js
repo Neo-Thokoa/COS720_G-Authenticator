@@ -22,7 +22,13 @@
        templateUrl: "pages/main/main.view.html",
        controller: "MainController"
    })
+   .when("/home", {
+        templateUrl: "pages/home/home.view.html",
+        controller: "HomeController",
+        controllerAs: 'homeCtrl'
+    })
     .otherwise({
       redirectTo: "/"
   });
 }]);
+

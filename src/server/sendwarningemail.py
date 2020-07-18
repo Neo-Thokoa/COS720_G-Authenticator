@@ -6,9 +6,13 @@ from apiclient import errors
 from apiclient import discovery
 from email.mime.text import MIMEText
 import base64
+import os
+import sys
 
+script_dir = os.path.dirname(__file__)
 SCOPES = 'https://www.googleapis.com/auth/gmail.modify'
-store = file.Storage('token.json')
+tokenPath = os.path.join(script_dir, 'a_dataAquisition/token.json')
+store = file.Storage(tokenPath)
 
 
 def send_message(service, user_id, message):
@@ -72,4 +76,4 @@ def send_mail(message_text):
     response = send_message(GMAIL, sender, message)
     return response
 
-send_mail("Lol")
+send_mail(sys.argv[1])
